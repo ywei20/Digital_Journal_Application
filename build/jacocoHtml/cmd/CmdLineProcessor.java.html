@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CmdLineProcessor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hw9</a> &gt; <a href="index.source.html" class="el_package">cmd</a> &gt; <span class="el_source">CmdLineProcessor.java</span></div><h1>CmdLineProcessor.java</h1><pre class="source lang-java linenums">package cmd;
+
+import ProcessFile.DateParser;
+import ProcessFile.InvalidDateException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * Class to parse the cmd line options and arguments
+ */
+public class CmdLineProcessor {
+
+  public static final int OP_NAME_START_INDEX = 2;
+<span class="fc" id="L22">  public static final List&lt;String&gt; REQUIRED_OPTIONS = Collections</span>
+<span class="fc" id="L23">      .unmodifiableList(Arrays.asList(&quot;--csv-file&quot;));</span>
+<span class="fc" id="L24">  public static final Set&lt;String&gt; ALLOWED_PRIORITIES = Collections</span>
+<span class="fc" id="L25">      .unmodifiableSet(new HashSet&lt;&gt;(Arrays.asList(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;)));</span>
+
+  private static CmdLineProcessor instance;
+
+  /**
+   * Constructor of CmdLineProcessor
+   */
+  private CmdLineProcessor() {
+  }
+
+  /**
+   * Gets the singleton instance
+   *
+   * @return the instance
+   */
+  public static CmdLineProcessor getInstance() {
+<span class="fc bfc" id="L41" title="All 2 branches covered.">    if (instance == null) {</span>
+<span class="fc" id="L42">      instance = new CmdLineProcessor();</span>
+    }
+<span class="fc" id="L44">    return instance;</span>
+  }
+
+  /**
+   * Main function to process the command line arguments
+   *
+   * @param args arguments to process
+   */
+  public ParsedArgs processArgument(String[] args) {
+<span class="fc" id="L53">    ParsedArgs parsedArgs = new ParsedArgs();</span>
+<span class="fc" id="L54">    Map&lt;Operation, Set&lt;String&gt;&gt; operations = new HashMap&lt;&gt;();</span>
+
+    // Create a hashset for all the provided options and arguments for easier query
+<span class="fc" id="L57">    Set&lt;String&gt; providedOptions = new HashSet&lt;&gt;(Arrays.asList(args));</span>
+
+    // Check if all the required options are provided
+<span class="fc bfc" id="L60" title="All 2 branches covered.">    for (String option : REQUIRED_OPTIONS) {</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">      if (!providedOptions.contains(option)) {</span>
+<span class="fc" id="L62">        throw new CmdLineException(&quot;Error: required option is not provided: &quot; + option);</span>
+      }
+<span class="fc" id="L64">    }</span>
+
+<span class="fc" id="L66">    int n = args.length;</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">    for (int i = 0; i &lt; n; i++) {</span>
+<span class="fc bfc" id="L68" title="All 9 branches covered.">      switch (args[i]) {</span>
+        case &quot;--csv-file&quot;:
+          // Update the path of the csv-file
+<span class="fc" id="L71">          checkIfArgumentProvidedNext(args, i);</span>
+
+          // If the next argument is not a .csv file
+<span class="fc" id="L74">          String csvPath = args[i + 1];</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">          if (!csvPath.contains(&quot;.csv&quot;)) {</span>
+<span class="nc" id="L76">            throw new CmdLineException(&quot;Error: --csv--file should follow the path of a .csv file&quot;);</span>
+          }
+<span class="fc" id="L78">          parsedArgs.setCsvFile(args[i + 1]);</span>
+<span class="fc" id="L79">          i++;</span>
+<span class="fc" id="L80">          break;</span>
+
+        case &quot;--add-entry&quot;:
+<span class="fc bfc" id="L83" title="All 2 branches covered.">          if (!providedOptions.contains(&quot;--entry-text&quot;)) {</span>
+<span class="fc" id="L84">            throw new CmdLineException(</span>
+                &quot;Error: --add-entry provided but no --entry-text was given.&quot;);
+          }
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">          if (!providedOptions.contains(&quot;--date&quot;)) {</span>
+<span class="nc" id="L88">            throw new CmdLineException(</span>
+                &quot;Error: --add-entry provided but no --date was given.&quot;);
+          }
+<span class="fc bfc" id="L91" title="All 2 branches covered.">          if (operations.containsKey(Operation.ADD_ENTRY)) {</span>
+<span class="fc" id="L92">            throw new CmdLineException(</span>
+                &quot;Error: --add-entry can only be performed once&quot;);
+          }
+<span class="fc" id="L95">          operations.put(Operation.ADD_ENTRY, new HashSet&lt;&gt;());</span>
+<span class="fc" id="L96">          break;</span>
+
+        case &quot;--entry-text&quot;:
+<span class="fc" id="L99">          checkIfArgumentProvidedNext(args, i);</span>
+<span class="fc" id="L100">          parsedArgs.setEntryText(args[i + 1]);</span>
+<span class="fc" id="L101">          i++;</span>
+<span class="fc" id="L102">          break;</span>
+
+        case &quot;--completed&quot;:
+<span class="fc" id="L105">          parsedArgs.setCompleted(true);</span>
+<span class="fc" id="L106">          break;</span>
+
+        case &quot;--date&quot;:
+<span class="fc" id="L109">          checkIfArgumentProvidedNext(args, i);</span>
+          try {
+<span class="fc" id="L111">            parsedArgs.setDate(DateParser.processDate(args[i+1]));</span>
+<span class="fc" id="L112">          } catch (DateTimeParseException | InvalidDateException e) {</span>
+<span class="fc" id="L113">            throw new CmdLineException(&quot;Error: cannot parse the specified date: &quot; + args[i + 1]);</span>
+<span class="fc" id="L114">          }</span>
+<span class="fc" id="L115">          i++;</span>
+<span class="fc" id="L116">          break;</span>
+
+        case &quot;--priority&quot;:
+<span class="fc" id="L119">          checkIfArgumentProvidedNext(args, i);</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">          if (!ALLOWED_PRIORITIES.contains(args[i + 1])) {</span>
+<span class="fc" id="L121">            throw new CmdLineException(&quot;Error: specified priority is not valid: &quot; + args[i + 1]);</span>
+          }
+<span class="fc" id="L123">          parsedArgs.setPriority(args[i + 1]);</span>
+<span class="fc" id="L124">          i++;</span>
+<span class="fc" id="L125">          break;</span>
+
+        case &quot;--category&quot;:
+<span class="fc" id="L128">          checkIfArgumentProvidedNext(args, i);</span>
+<span class="fc" id="L129">          parsedArgs.setCategory(args[i + 1]);</span>
+<span class="fc" id="L130">          i++;</span>
+<span class="fc" id="L131">          break;</span>
+
+        // Process the following commands
+        case &quot;--complete-entry&quot;:
+        case &quot;--display&quot;:
+        case &quot;--show-incomplete&quot;:
+        case &quot;--show-category&quot;:
+        case &quot;--sort-by-date&quot;:
+        case &quot;--sort-by-priority&quot;:
+          // Get the corresponding Operation enum
+<span class="fc" id="L141">          Operation op = Operation.valueOf(cmdToOperationName(args[i]));</span>
+<span class="fc" id="L142">          operations.putIfAbsent(op, new HashSet&lt;&gt;());</span>
+<span class="fc bfc" id="L143" title="All 4 branches covered.">          if (args[i].equals(&quot;--show-category&quot;) || args[i].equals(&quot;--complete-entry&quot;)) {</span>
+<span class="fc" id="L144">            checkIfArgumentProvidedNext(args, i);</span>
+
+            // --show-category can only be specified once while --complete-entry can be
+            // specified multiple times
+<span class="fc bfc" id="L148" title="All 4 branches covered.">            if (args[i].equals(&quot;--show-category&quot;) &amp;&amp; operations.get(op).size() &gt; 0) {</span>
+<span class="fc" id="L149">              throw new CmdLineException(&quot;Error: --show-category can only be specified once&quot;);</span>
+            }
+<span class="fc" id="L151">            operations.get(op).add(args[i + 1]);</span>
+<span class="fc" id="L152">            i++;</span>
+          }
+          break;
+
+        default:
+          // If none of the above options matches, it's not a valid option
+<span class="fc" id="L158">          throw new CmdLineException(&quot;Error: option not recognized: &quot; + args[i]);</span>
+      }
+    }
+<span class="fc" id="L161">    parsedArgs.setOperations(operations);</span>
+<span class="fc" id="L162">    return parsedArgs;</span>
+  }
+
+  /**
+   * Map the command line to the operation name, e.g. from '--complete-entry' to 'COMPLETE_ENTRY'
+   *
+   * @return the Operation enum name
+   */
+  private String cmdToOperationName(String cmd) {
+<span class="fc" id="L171">    return cmd.substring(OP_NAME_START_INDEX)</span>
+<span class="fc" id="L172">        .toUpperCase()</span>
+<span class="fc" id="L173">        .replace('-', '_');</span>
+  }
+
+  /**
+   * For some options, immediate argument is needed following the option. This helper funtion checks
+   * if the next argument exists and if it's valid (Shouldn't be starting with &quot;--&quot; as it's a
+   * argument not an option).
+   *
+   * @param args the list of provided args
+   * @param i    the current index of the option in the list
+   */
+  private void checkIfArgumentProvidedNext(String[] args, int i) {
+<span class="pc bpc" id="L185" title="1 of 4 branches missed.">    if (i == args.length - 1 || args[i + 1].startsWith(&quot;--&quot;)) {</span>
+<span class="fc" id="L186">      throw new CmdLineException(</span>
+          &quot;Error: option provided but no argument provided following the option: &quot; + args[i]);
+    }
+<span class="fc" id="L189">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

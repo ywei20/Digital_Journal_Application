@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="functionality.DigitalEntryManagerImplTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2020-07-30T20:20:09" hostname="Yans-MacBook-Pro.local" time="0.023">
+  <properties/>
+  <testcase name="addEntry" classname="functionality.DigitalEntryManagerImplTest" time="0.006"/>
+  <testcase name="testToString" classname="functionality.DigitalEntryManagerImplTest" time="0.001"/>
+  <testcase name="completeDigitalEntryIDIsZero" classname="functionality.DigitalEntryManagerImplTest" time="0.0"/>
+  <testcase name="completeDigitalEntry" classname="functionality.DigitalEntryManagerImplTest" time="0.001"/>
+  <testcase name="displayShowIncompleteByCategorySortByPriority" classname="functionality.DigitalEntryManagerImplTest" time="0.004"/>
+  <testcase name="displayConflictSort" classname="functionality.DigitalEntryManagerImplTest" time="0.001"/>
+  <testcase name="completeDigitalEntryIDNotFound" classname="functionality.DigitalEntryManagerImplTest" time="0.002"/>
+  <testcase name="displayAllDigitalEntriesSortByDate" classname="functionality.DigitalEntryManagerImplTest" time="0.002"/>
+  <testcase name="testHashCode" classname="functionality.DigitalEntryManagerImplTest" time="0.0"/>
+  <testcase name="displayNoMatchingResults" classname="functionality.DigitalEntryManagerImplTest" time="0.0"/>
+  <testcase name="testEquals" classname="functionality.DigitalEntryManagerImplTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

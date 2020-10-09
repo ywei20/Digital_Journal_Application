@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd xmlns="http://pmd.sourceforge.net/report/2.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://pmd.sourceforge.net/report/2.0.0 http://pmd.sourceforge.net/report_2_0_0.xsd"
+    version="6.20.0" timestamp="2020-07-30T11:50:44.281">
+<file name="/Users/yanwei/Documents/2020_Summer/CS5004/Team_repo_Team2/hw9/src/main/java/ProcessFile/DateParser.java">
+<violation beginline="11" endline="59" begincolumn="8" endcolumn="1" rule="ClassNamingConventions" ruleset="Code Style" package="ProcessFile" class="DateParser" externalInfoUrl="https://pmd.github.io/pmd-6.20.0/pmd_rules_java_codestyle.html#classnamingconventions" priority="1">
+The utility class name 'DateParser' doesn't match '[A-Z][a-zA-Z0-9]+(Utils?|Helper)'
+</violation>
+<violation beginline="13" endline="13" begincolumn="22" endcolumn="31" rule="FieldNamingConventions" ruleset="Code Style" package="ProcessFile" class="DateParser$DateParser" variable="YEARLENGTH" externalInfoUrl="https://pmd.github.io/pmd-6.20.0/pmd_rules_java_codestyle.html#fieldnamingconventions" priority="1">
+The static field name 'YEARLENGTH' doesn't match '[a-z][a-zA-Z0-9]*'
+</violation>
+<violation beginline="13" endline="13" begincolumn="22" endcolumn="31" rule="VariableNamingConventions" ruleset="Code Style" package="ProcessFile" class="DateParser$DateParser" variable="YEARLENGTH" externalInfoUrl="https://pmd.github.io/pmd-6.20.0/pmd_rules_java_codestyle.html#variablenamingconventions" priority="1">
+Variables should start with a lowercase character, 'YEARLENGTH' starts with uppercase character.
+</violation>
+<violation beginline="14" endline="14" begincolumn="22" endcolumn="30" rule="FieldNamingConventions" ruleset="Code Style" package="ProcessFile" class="DateParser$DateParser" variable="MINLENGTH" externalInfoUrl="https://pmd.github.io/pmd-6.20.0/pmd_rules_java_codestyle.html#fieldnamingconventions" priority="1">
+The static field name 'MINLENGTH' doesn't match '[a-z][a-zA-Z0-9]*'
+</violation>
+<violation beginline="14" endline="14" begincolumn="22" endcolumn="30" rule="VariableNamingConventions" ruleset="Code Style" package="ProcessFile" class="DateParser$DateParser" variable="MINLENGTH" externalInfoUrl="https://pmd.github.io/pmd-6.20.0/pmd_rules_java_codestyle.html#variablenamingconventions" priority="1">
+Variables should start with a lowercase character, 'MINLENGTH' starts with uppercase character.
+</violation>
+<violation beginline="15" endline="15" begincolumn="22" endcolumn="30" rule="FieldNamingConventions" ruleset="Code Style" package="ProcessFile" class="DateParser$DateParser" variable="MAXLENGTH" externalInfoUrl="https://pmd.github.io/pmd-6.20.0/pmd_rules_java_codestyle.html#fieldnamingconventions" priority="1">
+The static field name 'MAXLENGTH' doesn't match '[a-z][a-zA-Z0-9]*'
+</violation>
+<violation beginline="15" endline="15" begincolumn="22" endcolumn="30" rule="VariableNamingConventions" ruleset="Code Style" package="ProcessFile" class="DateParser$DateParser" variable="MAXLENGTH" externalInfoUrl="https://pmd.github.io/pmd-6.20.0/pmd_rules_java_codestyle.html#variablenamingconventions" priority="1">
+Variables should start with a lowercase character, 'MAXLENGTH' starts with uppercase character.
+</violation>
+<violation beginline="16" endline="16" begincolumn="22" endcolumn="41" rule="VariableNamingConventions" ruleset="Code Style" package="ProcessFile" class="DateParser$DateParser" variable="EXPECTED_DATE_LENGTH" externalInfoUrl="https://pmd.github.io/pmd-6.20.0/pmd_rules_java_codestyle.html#variablenamingconventions" priority="1">
+Only variables that are final should contain underscores (except for underscores in standard prefix/suffix), 'EXPECTED_DATE_LENGTH' is not final.
+</violation>
+<violation beginline="16" endline="16" begincolumn="22" endcolumn="41" rule="FieldNamingConventions" ruleset="Code Style" package="ProcessFile" class="DateParser$DateParser" variable="EXPECTED_DATE_LENGTH" externalInfoUrl="https://pmd.github.io/pmd-6.20.0/pmd_rules_java_codestyle.html#fieldnamingconventions" priority="1">
+The static field name 'EXPECTED_DATE_LENGTH' doesn't match '[a-z][a-zA-Z0-9]*'
+</violation>
+<violation beginline="16" endline="16" begincolumn="22" endcolumn="41" rule="VariableNamingConventions" ruleset="Code Style" package="ProcessFile" class="DateParser$DateParser" variable="EXPECTED_DATE_LENGTH" externalInfoUrl="https://pmd.github.io/pmd-6.20.0/pmd_rules_java_codestyle.html#variablenamingconventions" priority="1">
+Variables should start with a lowercase character, 'EXPECTED_DATE_LENGTH' starts with uppercase character.
+</violation>
+<violation beginline="17" endline="17" begincolumn="22" endcolumn="29" rule="VariableNamingConventions" ruleset="Code Style" package="ProcessFile" class="DateParser$DateParser" variable="YEAR_POS" externalInfoUrl="https://pmd.github.io/pmd-6.20.0/pmd_rules_java_codestyle.html#variablenamingconventions" priority="1">
+Only variables that are final should contain underscores (except for underscores in standard prefix/suffix), 'YEAR_POS' is not final.
+</violation>
+<violation beginline="17" endline="17" begincolumn="22" endcolumn="29" rule="FieldNamingConventions" ruleset="Code Style" package="ProcessFile" class="DateParser$DateParser" variable="YEAR_POS" externalInfoUrl="https://pmd.github.io/pmd-6.20.0/pmd_rules_java_codestyle.html#fieldnamingconventions" priority="1">
+The static field name 'YEAR_POS' doesn't match '[a-z][a-zA-Z0-9]*'
+</violation>
+<violation beginline="17" endline="17" begincolumn="22" endcolumn="29" rule="VariableNamingConventions" ruleset="Code Style" package="ProcessFile" class="DateParser$DateParser" variable="YEAR_POS" externalInfoUrl="https://pmd.github.io/pmd-6.20.0/pmd_rules_java_codestyle.html#variablenamingconventions" priority="1">
+Variables should start with a lowercase character, 'YEAR_POS' starts with uppercase character.
+</violation>
+</file>
+<file name="/Users/yanwei/Documents/2020_Summer/CS5004/Team_repo_Team2/hw9/src/main/java/ProcessFile/ReadJournalData.java">
+<violation beginline="69" endline="69" begincolumn="17" endcolumn="34" rule="SystemPrintln" ruleset="Best Practices" package="ProcessFile" class="ReadJournalData" method="readData" externalInfoUrl="https://pmd.github.io/pmd-6.20.0/pmd_rules_java_bestpractices.html#systemprintln" priority="2">
+System.out.println is used
+</violation>
+<violation beginline="74" endline="74" begincolumn="24" endcolumn="32" rule="LocalVariableNamingConventions" ruleset="Code Style" package="ProcessFile" class="ReadJournalData" method="readData" variable="InputLine" externalInfoUrl="https://pmd.github.io/pmd-6.20.0/pmd_rules_java_codestyle.html#localvariablenamingconventions" priority="1">
+The local variable name 'InputLine' doesn't match '[a-z][a-zA-Z0-9]*'
+</violation>
+<violation beginline="74" endline="74" begincolumn="24" endcolumn="32" rule="VariableNamingConventions" ruleset="Code Style" package="ProcessFile" class="ReadJournalData" method="readData" variable="InputLine" externalInfoUrl="https://pmd.github.io/pmd-6.20.0/pmd_rules_java_codestyle.html#variablenamingconventions" priority="1">
+Variables should start with a lowercase character, 'InputLine' starts with uppercase character.
+</violation>
+</file>
+<file name="/Users/yanwei/Documents/2020_Summer/CS5004/Team_repo_Team2/hw9/src/main/java/functionality/DigitalEntryManagerImpl.java">
+<violation beginline="54" endline="60" begincolumn="11" endcolumn="3" rule="MethodNamingConventions" ruleset="Code Style" package="functionality" class="DigitalEntryManagerImpl" method="WriteALineToFile" externalInfoUrl="https://pmd.github.io/pmd-6.20.0/pmd_rules_java_codestyle.html#methodnamingconventions" priority="1">
+The instance method name 'WriteALineToFile' doesn't match '[a-z][a-zA-Z0-9]*'
+</violation>
+<violation beginline="141" endline="141" begincolumn="7" endcolumn="24" rule="SystemPrintln" ruleset="Best Practices" package="functionality" class="DigitalEntryManagerImpl" method="displayHelper" externalInfoUrl="https://pmd.github.io/pmd-6.20.0/pmd_rules_java_bestpractices.html#systemprintln" priority="2">
+System.out.println is used
+</violation>
+<violation beginline="143" endline="143" begincolumn="7" endcolumn="24" rule="SystemPrintln" ruleset="Best Practices" package="functionality" class="DigitalEntryManagerImpl" method="displayHelper" externalInfoUrl="https://pmd.github.io/pmd-6.20.0/pmd_rules_java_bestpractices.html#systemprintln" priority="2">
+System.out.println is used
+</violation>
+<violation beginline="144" endline="144" begincolumn="7" endcolumn="24" rule="SystemPrintln" ruleset="Best Practices" package="functionality" class="DigitalEntryManagerImpl" method="displayHelper" externalInfoUrl="https://pmd.github.io/pmd-6.20.0/pmd_rules_java_bestpractices.html#systemprintln" priority="2">
+System.out.println is used
+</violation>
+<violation beginline="147" endline="147" begincolumn="7" endcolumn="24" rule="SystemPrintln" ruleset="Best Practices" package="functionality" class="DigitalEntryManagerImpl" method="displayHelper" externalInfoUrl="https://pmd.github.io/pmd-6.20.0/pmd_rules_java_bestpractices.html#systemprintln" priority="2">
+System.out.println is used
+</violation>
+</file>
+</pmd>

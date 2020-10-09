@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DigitalEntryManagerImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hw9</a> &gt; <a href="index.source.html" class="el_package">functionality</a> &gt; <span class="el_source">DigitalEntryManagerImpl.java</span></div><h1>DigitalEntryManagerImpl.java</h1><pre class="source lang-java linenums">package functionality;
+
+import ProcessFile.DigitalEntry;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+/**
+ * Represents a digital entry manager implementation
+ */
+public class DigitalEntryManagerImpl implements DigitalEntryManager{
+
+  List&lt;DigitalEntry&gt; data;
+  List&lt;String&gt; header;
+  String fileName;
+
+  /**
+   * Instantiate a new DigitalEntryManagerImpl instance
+   *
+   * @param data represents all data entry
+   * @param header represents header of csv file
+   * @param fileName represents outfile name
+   */
+<span class="fc" id="L30">  public DigitalEntryManagerImpl(List&lt;DigitalEntry&gt; data, List&lt;String&gt; header, String fileName) {</span>
+<span class="fc" id="L31">    this.data = data;</span>
+<span class="fc" id="L32">    this.header = header;</span>
+<span class="fc" id="L33">    this.fileName = fileName;</span>
+<span class="fc" id="L34">  }</span>
+
+  /**
+   * Add a new entry to the system
+   *
+   * @param digitalEntry an object of digitalEntry
+   */
+  @Override
+  public void addEntry(DigitalEntry digitalEntry) {
+<span class="fc" id="L43">    this.data.add(digitalEntry);</span>
+<span class="fc" id="L44">    digitalEntry.setId(this.data.size());</span>
+<span class="fc" id="L45">    String text = digitalEntry.toString();</span>
+<span class="fc" id="L46">    this.WriteALineToFile(&quot;\n&quot; + text);</span>
+<span class="fc" id="L47">  }</span>
+
+  /**
+   * Append a new line to the end of an existing file
+   *
+   * @param text, text file that will be added to the file
+   */
+  private void WriteALineToFile(String text) {
+<span class="fc" id="L55">    try (BufferedWriter outFile = new BufferedWriter(new FileWriter(this.fileName, true))) {</span>
+<span class="fc" id="L56">      outFile.write(text);</span>
+<span class="nc" id="L57">    } catch (IOException e) {</span>
+<span class="nc" id="L58">      e.printStackTrace();</span>
+<span class="fc" id="L59">    }</span>
+<span class="fc" id="L60">  }</span>
+
+  /**
+   * Update completed status of existing digital entries
+   *
+   * @param ids set of ids of existing digital entries that need to update
+   * @throws IDNotFoundException if ids not in the system
+   */
+  @Override
+  public void completeDigitalEntry(Set&lt;Integer&gt; ids) throws IDNotFoundException {
+<span class="fc bfc" id="L70" title="All 2 branches covered.">    for (Integer id: ids) {</span>
+<span class="fc bfc" id="L71" title="All 4 branches covered.">      if (id &lt;= 0 || id &gt; this.data.size()) {</span>
+<span class="fc" id="L72">        throw new IDNotFoundException(&quot;id&quot; + id + &quot;is not valid&quot;);</span>
+      }
+<span class="fc" id="L74">      this.data.get(id-1).setCompleted(true);</span>
+<span class="fc" id="L75">    }</span>
+<span class="fc" id="L76">    this.writeAllToFile();</span>
+<span class="fc" id="L77">  }</span>
+
+  /**
+   * Overwrite the csv file
+   */
+  private void writeAllToFile() {
+<span class="fc" id="L83">    try (BufferedWriter outFile = new BufferedWriter(new FileWriter(this.fileName))) {</span>
+<span class="fc" id="L84">      outFile.write(String.join(&quot;,&quot;, this.header));</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">      for (DigitalEntry d: this.data) {</span>
+<span class="fc" id="L86">        outFile.write(&quot;\n&quot; + d.toString());</span>
+<span class="fc" id="L87">      }</span>
+<span class="nc" id="L88">    } catch (IOException e) {</span>
+<span class="nc" id="L89">      e.printStackTrace();</span>
+<span class="fc" id="L90">    }</span>
+<span class="fc" id="L91">  }</span>
+
+  /**
+   * Display list of digital entries according to filtering options
+   *
+   * @param showIncomplete, indicate displaying incomplete digital entries
+   * @param category, represent category of digial entries that will be displayed
+   * @param sortByDate, indicate we want to sort by date(ascending)
+   * @param sortByPriority, indicate we want to sort by priority(descending)
+   */
+  @Override
+  public void displayDigitalEntries(boolean showIncomplete, String category, boolean sortByDate,
+      boolean sortByPriority) throws ConflictFilterArgumentException {
+<span class="fc bfc" id="L104" title="All 4 branches covered.">    if (sortByDate &amp;&amp; sortByPriority) {</span>
+<span class="fc" id="L105">      throw new ConflictFilterArgumentException(&quot;Cannot combine sorted by date AND priority&quot;);</span>
+    }
+
+<span class="fc" id="L108">    List&lt;DigitalEntry&gt; filtered = new ArrayList&lt;&gt;(this.data);</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">    if (showIncomplete) {</span>
+<span class="fc" id="L110">      filtered = filtered.stream()</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">          .filter(x -&gt; !x.isCompleted())</span>
+<span class="fc" id="L112">          .collect(Collectors.toList());</span>
+    }
+<span class="fc bfc" id="L114" title="All 2 branches covered.">    if (category != null) {</span>
+<span class="fc" id="L115">      filtered = filtered.stream()</span>
+<span class="fc bfc" id="L116" title="All 4 branches covered.">          .filter(x -&gt; x.getCategory() != null &amp;&amp; x.getCategory().equals(category))</span>
+<span class="fc" id="L117">          .collect(Collectors.toList());</span>
+    }
+<span class="fc bfc" id="L119" title="All 2 branches covered.">    if (sortByDate) {</span>
+<span class="fc" id="L120">      filtered = filtered.stream()</span>
+<span class="fc" id="L121">          .sorted(Comparator.comparing(DigitalEntry::getDate))</span>
+<span class="fc" id="L122">          .collect(Collectors.toList());</span>
+    }
+<span class="fc bfc" id="L124" title="All 2 branches covered.">    if (sortByPriority) {</span>
+<span class="fc" id="L125">      filtered = filtered.stream().</span>
+<span class="fc" id="L126">          sorted(Comparator.comparing(DigitalEntry::getPriority)).</span>
+<span class="fc" id="L127">          collect(Collectors.toList());</span>
+    }
+
+<span class="fc" id="L130">    this.displayHelper(filtered);</span>
+
+<span class="fc" id="L132">  }</span>
+
+  /**
+   * Helper method used by displayDigitalEntries(), print out filtered data results
+   *
+   * @param data a list of DigitalEntry that will be displayed
+   */
+  private void displayHelper(List&lt;DigitalEntry&gt; data) {
+<span class="fc bfc" id="L140" title="All 2 branches covered.">    if (data.size() == 0) {</span>
+<span class="fc" id="L141">      System.out.println(&quot;No matching results&quot;);</span>
+    } else {
+<span class="fc" id="L143">      System.out.println(&quot;Showing &quot; + data.size() + &quot; results:&quot;);</span>
+<span class="fc" id="L144">      System.out.println(String.join(&quot;,&quot;, this.header));</span>
+    }
+<span class="fc bfc" id="L146" title="All 2 branches covered.">    for (DigitalEntry digitalEntry: data) {</span>
+<span class="fc" id="L147">      System.out.println(digitalEntry.toString());</span>
+<span class="fc" id="L148">    }</span>
+<span class="fc" id="L149">  }</span>
+
+  @Override
+  public boolean equals(Object o) {
+<span class="fc bfc" id="L153" title="All 2 branches covered.">    if (this == o) {</span>
+<span class="fc" id="L154">      return true;</span>
+    }
+<span class="fc bfc" id="L156" title="All 4 branches covered.">    if (o == null || getClass() != o.getClass()) {</span>
+<span class="fc" id="L157">      return false;</span>
+    }
+<span class="fc" id="L159">    DigitalEntryManagerImpl that = (DigitalEntryManagerImpl) o;</span>
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">    return Objects.equals(data, that.data) &amp;&amp;</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">        Objects.equals(header, that.header) &amp;&amp;</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">        Objects.equals(fileName, that.fileName);</span>
+  }
+
+  @Override
+  public int hashCode() {
+<span class="fc" id="L167">    return Objects.hash(data, header, fileName);</span>
+  }
+
+  @Override
+  public String toString() {
+<span class="fc" id="L172">    return &quot;DigitalEntryManagerImpl{&quot; +</span>
+        &quot;data=&quot; + data +
+        &quot;, header=&quot; + header +
+        &quot;, fileName='&quot; + fileName + '\'' +
+        '}';
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

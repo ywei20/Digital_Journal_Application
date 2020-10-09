@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ProcessFile.DateParserTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2020-07-30T20:20:09" hostname="Yans-MacBook-Pro.local" time="0.003">
+  <properties/>
+  <testcase name="processDateInvalidMonth" classname="ProcessFile.DateParserTest" time="0.001"/>
+  <testcase name="processDateIncorrectDay" classname="ProcessFile.DateParserTest" time="0.0"/>
+  <testcase name="processDateWrongLength" classname="ProcessFile.DateParserTest" time="0.001"/>
+  <testcase name="processDateInvalidYear" classname="ProcessFile.DateParserTest" time="0.0"/>
+  <testcase name="processDateSuccessSingleDigit" classname="ProcessFile.DateParserTest" time="0.0"/>
+  <testcase name="processDateSuccessDoubleDigit" classname="ProcessFile.DateParserTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

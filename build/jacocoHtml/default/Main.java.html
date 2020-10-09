@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Main.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hw9</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">Main.java</span></div><h1>Main.java</h1><pre class="source lang-java linenums">import ProcessFile.DigitalEntry;
+import ProcessFile.DigitalEntry.Builder;
+import ProcessFile.ReadJournalData;
+import cmd.CmdLineProcessor;
+import cmd.Operation;
+import cmd.ParsedArgs;
+import functionality.DigitalEntryManager;
+import functionality.DigitalEntryManagerImpl;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * Main class of the command line tool to manage digital entries
+ */
+<span class="nc" id="L17">public class Main {</span>
+
+    /**
+     * The main function
+     *
+     * @param args args from command line
+     * @throws Exception exception
+     */
+    public static void main(String[] args) throws Exception {
+<span class="nc" id="L26">        CmdLineProcessor clProcessor = CmdLineProcessor.getInstance();  // instantiate a new CmdLineProcessor object</span>
+<span class="nc" id="L27">        ParsedArgs parsedArgs = clProcessor.processArgument(args); // Check whether args is valid argument string array</span>
+
+<span class="nc" id="L29">        ReadJournalData csvReader = ReadJournalData.getInstance(); // instantiate a new ReadJournalData object</span>
+<span class="nc" id="L30">        List&lt;DigitalEntry&gt; data = csvReader.readData(parsedArgs.getCsvFile()); //read in data from csv file</span>
+
+<span class="nc" id="L32">        DigitalEntryManager digitalEntryManager = new DigitalEntryManagerImpl(data,</span>
+<span class="nc" id="L33">            csvReader.getHeader(), parsedArgs.getCsvFile()); // instantiate a new DigitalEntryManager object</span>
+
+<span class="nc" id="L35">        Map&lt;Operation, Set&lt;String&gt;&gt; operations = parsedArgs.getOperations(); // Get all command line operations</span>
+
+        // Do adding entry
+<span class="nc bnc" id="L38" title="All 2 branches missed.">        if (operations.containsKey(Operation.ADD_ENTRY)) {</span>
+<span class="nc" id="L39">            digitalEntryManager.addEntry(DigitalEntry.builder()</span>
+<span class="nc" id="L40">                .setText(parsedArgs.getEntryText())</span>
+<span class="nc" id="L41">                .setCategory(parsedArgs.getCategory())</span>
+<span class="nc" id="L42">                .setCompleted(parsedArgs.getCompleted())</span>
+<span class="nc bnc" id="L43" title="All 2 branches missed.">                .setPriority(parsedArgs.getPriority() != null ? Integer.parseInt(parsedArgs.getPriority()) : null)</span>
+<span class="nc" id="L44">                .setDate(parsedArgs.getDate())</span>
+<span class="nc" id="L45">                .build());</span>
+        }
+
+        // Do updating complete status
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        if (operations.containsKey(Operation.COMPLETE_ENTRY)) {</span>
+<span class="nc" id="L50">            Set&lt;Integer&gt; ids = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L51">            operations.get(Operation.COMPLETE_ENTRY).forEach(id -&gt; ids.add(Integer.parseInt(id)));</span>
+<span class="nc" id="L52">            digitalEntryManager.completeDigitalEntry(ids);</span>
+        }
+
+        // do displaying
+<span class="nc bnc" id="L56" title="All 2 branches missed.">        if (operations.containsKey(Operation.DISPLAY)) {</span>
+<span class="nc" id="L57">            boolean showIncomplete = false;</span>
+<span class="nc" id="L58">            String category = null;</span>
+<span class="nc" id="L59">            boolean sortByDate = false;</span>
+<span class="nc" id="L60">            boolean sortByPriority = false;</span>
+
+<span class="nc bnc" id="L62" title="All 2 branches missed.">            if (parsedArgs.getOperations().containsKey(Operation.SHOW_CATEGORY)) {</span>
+<span class="nc" id="L63">                category = operations.get(Operation.SHOW_CATEGORY).iterator().next();</span>
+            }
+
+<span class="nc bnc" id="L66" title="All 2 branches missed.">            if (parsedArgs.getOperations().containsKey(Operation.SHOW_INCOMPLETE)) {</span>
+<span class="nc" id="L67">                showIncomplete = true;</span>
+            }
+
+<span class="nc bnc" id="L70" title="All 2 branches missed.">            if (parsedArgs.getOperations().containsKey(Operation.SORT_BY_DATE)) {</span>
+<span class="nc" id="L71">                sortByDate = true;</span>
+            }
+
+<span class="nc bnc" id="L74" title="All 2 branches missed.">            if (parsedArgs.getOperations().containsKey(Operation.SORT_BY_PRIORITY)) {</span>
+<span class="nc" id="L75">                sortByPriority = true;</span>
+            }
+
+<span class="nc" id="L78">            digitalEntryManager.displayDigitalEntries(showIncomplete, category, sortByDate, sortByPriority);</span>
+        }
+<span class="nc" id="L80">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

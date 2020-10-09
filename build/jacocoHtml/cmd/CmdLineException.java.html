@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CmdLineException.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hw9</a> &gt; <a href="index.source.html" class="el_package">cmd</a> &gt; <span class="el_source">CmdLineException.java</span></div><h1>CmdLineException.java</h1><pre class="source lang-java linenums">package cmd;
+
+/**
+ * Model general command line exception.
+ */
+public class CmdLineException extends RuntimeException {
+
+  private static String usageHelp;
+
+  //Used to represent USAGE help when it encounters an exception
+  static {
+<span class="fc" id="L12">    usageHelp = &quot;Usage:\n&quot;;</span>
+<span class="fc" id="L13">    usageHelp +=</span>
+        &quot;--csv-file &lt;path/to/file&gt;: The CSV file containing the digital entries. This option is required.\n&quot;
+            + &quot;--add-entry &lt;path/to/file&gt;: Add a new digital entry. If this option is provided, then --entry-text must also be provided\n&quot;
+            + &quot;--entry-text &lt;description of entry&gt;: A description of the digital entry.\n&quot;
+            + &quot;--completed: (Optional) Sets the completed status of a new digital entry to true. &quot;
+            + &quot;--date &lt;date&gt;:(Optional) Sets the date of a new digital entry. You may choose how the date should be formatted.\n&quot;
+            + &quot;--priority &lt;1, 2, or 3&gt;: (Optional) Sets the priority of a new digital entry. The value can be 1, 2, or 3.\n&quot;
+            + &quot;--category &lt;a category name&gt;: (Optional) Sets the category of a new digital entry. The value can be any String. Categories do not need to be pre-defined.\n&quot;
+            + &quot;--complete-entry &lt;id&gt;: Mark the DigitalEntry with the provided ID as complete.\n&quot;
+            + &quot;--display: Display digital entry. If none of the following optional arguments are provided, displays all digital entries.\n&quot;
+            + &quot;--show-incomplete: (Optional) If --display is provided, only incomplete digital entries should be displayed.\n&quot;
+            + &quot;--show-category &lt;category&gt;: (Optional) If --display is provided, only digital entries with the given category should be displayed.\n&quot;
+            + &quot;--sort-by-date: (Optional) If --display is provided, sort the list of digital entries by date order (ascending). Cannot be combined with --sort-by-priority.\n&quot;
+            + &quot;--sort-by-priority: (Optional) If --display is provided, sort the list of digital entries by priority (ascending). Cannot be combined with --sort-by-date.\n&quot;;
+<span class="fc" id="L27">  }</span>
+
+  /**
+   * This constructor prints the error message on command line and exits successfully.
+   *
+   * @param msg Error message
+   */
+  public CmdLineException(String msg) {
+<span class="fc" id="L35">    super(msg + &quot;\n\n&quot; + usageHelp);</span>
+<span class="fc" id="L36">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

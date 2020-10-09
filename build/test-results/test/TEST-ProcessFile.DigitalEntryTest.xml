@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ProcessFile.DigitalEntryTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2020-07-30T20:20:09" hostname="Yans-MacBook-Pro.local" time="0.003">
+  <properties/>
+  <testcase name="builderHasNoRequiredTextThrows" classname="ProcessFile.DigitalEntryTest" time="0.0"/>
+  <testcase name="setIdTest" classname="ProcessFile.DigitalEntryTest" time="0.001"/>
+  <testcase name="toStringTest" classname="ProcessFile.DigitalEntryTest" time="0.0"/>
+  <testcase name="getterTests" classname="ProcessFile.DigitalEntryTest" time="0.0"/>
+  <testcase name="equalTest" classname="ProcessFile.DigitalEntryTest" time="0.0"/>
+  <testcase name="defaultPriorityIs3" classname="ProcessFile.DigitalEntryTest" time="0.001"/>
+  <testcase name="hashCodeTest" classname="ProcessFile.DigitalEntryTest" time="0.0"/>
+  <testcase name="setCompletedTest" classname="ProcessFile.DigitalEntryTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,35 @@
+Description of the task
+
+Part 1:Command Line Parsing (Xinxin)
+Same:
+- The command line arguments parsing logic is almost the same with Assignment 8 where is loops
+  through the passed-in arguments, performs validation, and saves the data locally. The saved data
+  is used later on by the DigitalEntryManager to perform the related operations.
+Difference:
+- It extracts out all the data we need to the ParsedArgs class instead of leaves them as fields of
+  the CommandLineProcessor class. And we applied the Singleton design pattern to the CommandLineProcessor
+  so that the whole project would only have a single CommandLineProcessor instance.
+
+Part 2: ProcessFile.ReadJournalData (Fan)
+Same: read csv file as the same as Assignment8
+Difference: For entry "priority", if it offered with "?", read it as "3"
+            For entry "category", if it offered with "?", read it as "null"
+
+
+Part 3: DigitalEntry (Fan)
+Task 1: Build Immutable fields, with exceptions
+test - required field
+completed - optional, default is false, can be set to be true
+date - required
+priority - optional, should in between 1 to 3. If no priority specific, I recommend set it as "?"
+           then deal with it on read part.
+Category - optional. If not specific, I recommend set it as "?", then deal with it on read part.
+
+
+Task 2: Set up the ID for user. (Belongs to Yan's function. Can be discussed)
+
+
+Part 3: Function implementation (Yan)
+Interface: addNewDigitalEntry()
+           completeExistEntry()
+           displayEntries()

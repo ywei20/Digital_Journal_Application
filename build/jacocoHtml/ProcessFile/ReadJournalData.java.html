@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReadJournalData.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hw9</a> &gt; <a href="index.source.html" class="el_package">ProcessFile</a> &gt; <span class="el_source">ReadJournalData.java</span></div><h1>ReadJournalData.java</h1><pre class="source lang-java linenums">package ProcessFile;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+
+/**
+ * The class is responsible for read and store data from csv file
+ */
+public class ReadJournalData {
+
+    //Singleton
+<span class="fc" id="L16">    private static ReadJournalData instance = null;</span>
+
+    /**
+     * Get a ReadJournalData instance
+     *
+     * @return a ReadJournalData instance
+     */
+    public static ReadJournalData getInstance() {
+<span class="fc bfc" id="L24" title="All 2 branches covered.">        if (instance == null) {</span>
+<span class="fc" id="L25">            instance = new ReadJournalData();</span>
+        }
+<span class="fc" id="L27">        return instance;</span>
+    }
+
+    /**
+     * Constructor of ReadJournalData
+     */
+<span class="fc" id="L33">    private ReadJournalData() {}</span>
+
+    //field of header
+<span class="fc" id="L36">    private List&lt;String&gt; header = null;</span>
+
+    /**
+     * Getter of header
+     *
+     * @return header list
+     */
+    public List&lt;String&gt; getHeader() {
+<span class="pc bpc" id="L44" title="1 of 2 branches missed.">        if (header == null) {</span>
+<span class="nc" id="L45">            throw new IllegalStateException(&quot;readData() must be called first before headers are available.&quot;);</span>
+        }
+<span class="fc" id="L47">        return header;</span>
+    }
+
+    /**
+     * Method of file reading
+     *
+     * @param fileName String
+     * @return List&lt;DigitalEntry&gt;&lt;/DigitalEntry&gt;
+     * @throws Exception IO exception, file not find exception
+     */
+    public List&lt;DigitalEntry&gt; readData(String fileName) throws Exception {
+        //singleton
+<span class="fc" id="L59">        synchronized (this) {</span>
+<span class="fc" id="L60">            List&lt;DigitalEntry&gt; dataMap = new ArrayList&lt;&gt;();           //set up the returned object</span>
+            Scanner scanIn;                                           //temp save the readfile
+<span class="fc" id="L62">            List&lt;String&gt; headers = new ArrayList&lt;&gt;();                 //save the header information</span>
+
+
+            //set up a scanner
+            try {
+<span class="fc" id="L67">                scanIn = new Scanner(new BufferedReader(new FileReader(fileName)));</span>
+<span class="fc" id="L68">            } catch (IOException e) {</span>
+<span class="fc" id="L69">                System.out.println(String.format(&quot;%s was not found.&quot;, fileName));</span>
+<span class="fc" id="L70">                throw e;</span>
+<span class="fc" id="L71">            }</span>
+
+<span class="fc bfc" id="L73" title="All 2 branches covered.">            for (int rowCounter = 0; scanIn.hasNextLine(); rowCounter++) {</span>
+<span class="fc" id="L74">                String InputLine = scanIn.nextLine();</span>
+                //the comma followed by non/paired quotation marks will be counted as separator
+<span class="fc" id="L76">                List&lt;String&gt; lineContent = Arrays</span>
+<span class="fc" id="L77">                        .asList(InputLine.split(&quot;,(?=(?:[^\&quot;]*\&quot;[^\&quot;]*\&quot;)*[^\&quot;]*$)&quot;));</span>
+                //save information based on header
+<span class="fc bfc" id="L79" title="All 2 branches covered.">                if (rowCounter == 0) {</span>
+<span class="fc" id="L80">                    headers = lineContent;</span>
+                } else {
+<span class="fc" id="L82">                    Map&lt;String, String&gt; map = mapValues(headers, lineContent);</span>
+<span class="fc" id="L83">                    buildObject(map, dataMap, rowCounter);</span>
+                }
+            }
+<span class="fc" id="L86">            scanIn.close();</span>
+<span class="fc" id="L87">            this.header = headers;</span>
+<span class="fc" id="L88">            return dataMap;</span>
+        }
+    }
+
+    /**
+     * Create a digital entry object
+     *
+     * @param map key of map is field and value is the data
+     * @param dataMap a list storing all digital entry value
+     * @param id of digital entry
+     * @throws Exception if date format is invalid
+     */
+    private void buildObject(Map&lt;String, String&gt; map, List&lt;DigitalEntry&gt; dataMap, int id)  throws Exception {
+<span class="fc" id="L101">        DigitalEntry.Builder builder = DigitalEntry.builder().setDate(DateParser.processDate(map.get(&quot;due&quot;)))</span>
+<span class="fc" id="L102">            .setText(map.get(&quot;text&quot;));</span>
+
+<span class="fc bfc" id="L104" title="All 2 branches covered.">        if(!map.get(&quot;priority&quot;).equals(&quot;?&quot;)) {</span>
+<span class="fc" id="L105">            builder.setPriority(Integer.valueOf(map.get(&quot;priority&quot;)));</span>
+        }
+
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        if(!map.get(&quot;category&quot;).equals(&quot;?&quot;)) {</span>
+<span class="fc" id="L109">            builder.setCategory(map.get(&quot;category&quot;));</span>
+        }
+
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">        if(!map.get(&quot;completed&quot;).isEmpty()) {</span>
+<span class="fc" id="L113">            builder.setCompleted(Boolean.valueOf(map.get(&quot;completed&quot;)));</span>
+        }
+
+<span class="fc" id="L116">        DigitalEntry newEntry = builder.build();</span>
+<span class="fc" id="L117">        newEntry.setId(id);</span>
+
+<span class="fc" id="L119">        dataMap.add(newEntry);</span>
+<span class="fc" id="L120">    }</span>
+
+    /**
+     * helper function for reading data by entry
+     *
+     * @param headers List&lt;String&gt;&lt;/String&gt;
+     * @param values List&lt;String&gt;&lt;/String&gt;
+     * @return Map&lt;String, String&gt;&lt;/String,&gt;
+     */
+    private Map&lt;String, String&gt; mapValues(List&lt;String&gt; headers, List&lt;String&gt; values) {
+<span class="fc" id="L130">        Map&lt;String, String&gt; result = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">        for (int i = 0; i &lt; headers.size(); i++) {</span>
+<span class="fc" id="L132">            result.put(headers.get(i), values.get(i));</span>
+        }
+<span class="fc" id="L134">        return result;</span>
+    }
+
+
+    @Override
+    public String toString() {
+<span class="fc" id="L140">        return &quot;ReadJournalData{&quot; +</span>
+                &quot;header=&quot; + header +
+                '}';
+    }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd xmlns="http://pmd.sourceforge.net/report/2.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://pmd.sourceforge.net/report/2.0.0 http://pmd.sourceforge.net/report_2_0_0.xsd"
+    version="6.20.0" timestamp="2020-07-30T13:20:10.924">
+<file name="/Users/yanwei/Documents/2020_Summer/CS5004/Team_repo_Team2/hw9/src/test/java/cmd/CmdLineProcessorTest.java">
+<violation beginline="76" endline="105" begincolumn="10" endcolumn="3" rule="MethodNamingConventions" ruleset="Code Style" package="cmd" class="CmdLineProcessorTest" method="processArgument_requiredFieldNotProvided" externalInfoUrl="https://pmd.github.io/pmd-6.20.0/pmd_rules_java_codestyle.html#methodnamingconventions" priority="1">
+The JUnit 4 test method name 'processArgument_requiredFieldNotProvided' doesn't match '[a-z][a-zA-Z0-9]*'
+</violation>
+<violation beginline="109" endline="135" begincolumn="10" endcolumn="3" rule="MethodNamingConventions" ruleset="Code Style" package="cmd" class="CmdLineProcessorTest" method="processArgument_addEntryWithoutEntryText" externalInfoUrl="https://pmd.github.io/pmd-6.20.0/pmd_rules_java_codestyle.html#methodnamingconventions" priority="1">
+The JUnit 4 test method name 'processArgument_addEntryWithoutEntryText' doesn't match '[a-z][a-zA-Z0-9]*'
+</violation>
+<violation beginline="139" endline="167" begincolumn="10" endcolumn="3" rule="MethodNamingConventions" ruleset="Code Style" package="cmd" class="CmdLineProcessorTest" method="processArgument_twoAddEntryOptions" externalInfoUrl="https://pmd.github.io/pmd-6.20.0/pmd_rules_java_codestyle.html#methodnamingconventions" priority="1">
+The JUnit 4 test method name 'processArgument_twoAddEntryOptions' doesn't match '[a-z][a-zA-Z0-9]*'
+</violation>
+<violation beginline="171" endline="201" begincolumn="10" endcolumn="3" rule="MethodNamingConventions" ruleset="Code Style" package="cmd" class="CmdLineProcessorTest" method="processArgument_dateParsingError" externalInfoUrl="https://pmd.github.io/pmd-6.20.0/pmd_rules_java_codestyle.html#methodnamingconventions" priority="1">
+The JUnit 4 test method name 'processArgument_dateParsingError' doesn't match '[a-z][a-zA-Z0-9]*'
+</violation>
+<violation beginline="205" endline="224" begincolumn="10" endcolumn="3" rule="MethodNamingConventions" ruleset="Code Style" package="cmd" class="CmdLineProcessorTest" method="processArgument_invalidPriority" externalInfoUrl="https://pmd.github.io/pmd-6.20.0/pmd_rules_java_codestyle.html#methodnamingconventions" priority="1">
+The JUnit 4 test method name 'processArgument_invalidPriority' doesn't match '[a-z][a-zA-Z0-9]*'
+</violation>
+<violation beginline="228" endline="248" begincolumn="10" endcolumn="3" rule="MethodNamingConventions" ruleset="Code Style" package="cmd" class="CmdLineProcessorTest" method="processArgument_twoShowCategoryOptions" externalInfoUrl="https://pmd.github.io/pmd-6.20.0/pmd_rules_java_codestyle.html#methodnamingconventions" priority="1">
+The JUnit 4 test method name 'processArgument_twoShowCategoryOptions' doesn't match '[a-z][a-zA-Z0-9]*'
+</violation>
+<violation beginline="252" endline="271" begincolumn="10" endcolumn="3" rule="MethodNamingConventions" ruleset="Code Style" package="cmd" class="CmdLineProcessorTest" method="processArgument_optionWithoutFollowingArgument" externalInfoUrl="https://pmd.github.io/pmd-6.20.0/pmd_rules_java_codestyle.html#methodnamingconventions" priority="1">
+The JUnit 4 test method name 'processArgument_optionWithoutFollowingArgument' doesn't match '[a-z][a-zA-Z0-9]*'
+</violation>
+<violation beginline="275" endline="295" begincolumn="10" endcolumn="3" rule="MethodNamingConventions" ruleset="Code Style" package="cmd" class="CmdLineProcessorTest" method="processArgument_invalidCommand" externalInfoUrl="https://pmd.github.io/pmd-6.20.0/pmd_rules_java_codestyle.html#methodnamingconventions" priority="1">
+The JUnit 4 test method name 'processArgument_invalidCommand' doesn't match '[a-z][a-zA-Z0-9]*'
+</violation>
+</file>
+</pmd>
