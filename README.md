@@ -1,4 +1,4 @@
-# Assignment 9: Digital Journal Application
+# Assignment 9: Digital Journal Application(To-Do List Application)
 
 
 ## Introduction
